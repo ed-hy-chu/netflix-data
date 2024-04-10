@@ -143,37 +143,38 @@ WHERE show_id not rlike 's(\d)*'
 
 -- COMMAND ----------
 
-CREATE OR REPLACE TABLE bronze_titles (
+CREATE TABLE IF NOT EXISTS bronze_titles (
   show_id STRING,
   `type` STRING,
   title STRING,
-  director STRING,
-  `cast` STRING,
-  country STRING,
+  director ARRAY<STRING>,
+  `cast` ARRAY<STRING>,
+  country ARRAY<STRING>,
   date_added DATE,
   release_year INT,
   rating STRING,
   duration STRING,
-  listed_in STRING,
+  listed_in ARRAY<STRING>,
   `description` STRING
 );
 
 -- COMMAND ----------
 
+TRUNCATE TABLE bronze_titles;
 INSERT INTO bronze_titles
 SELECT
-  show_id STRING,
-  `type` STRING,
-  title STRING,
-  director STRING,
-  `cast` STRING,
-  country STRING,
+  show_id,
+  `type`,
+  title,
+  transform(split(director, ","), x-> trim(x)) AS director,
+  transform(split(`cast`, ","), x -> trim(x)) AS `cast`,
+  transform(split(country, ","), x-> trim(x)) AS country,
   to_date(date_added, 'MMMM d, yyyy'),
-  release_year INT,
-  rating STRING,
-  duration STRING,
-  listed_in STRING,
-  `description` STRING
+  release_year,
+  rating,
+  duration,
+  transform(split(listed_in, ","), x-> trim(x)) AS listed_in,
+  `description`
 FROM raw_titles_ext;
 
 -- COMMAND ----------
