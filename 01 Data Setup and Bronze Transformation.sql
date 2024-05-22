@@ -67,35 +67,6 @@ LIMIT 10
 
 -- COMMAND ----------
 
--- MAGIC %md
--- MAGIC save_dir = "/tmp/netflix"
--- MAGIC spark.conf.set("env.tmp_dir", save_dir)
--- MAGIC
--- MAGIC dbutils.fs.mkdirs(f"{save_dir}/")
--- MAGIC dbutils.fs.rm(f"{save_dir}/", True)
-
--- COMMAND ----------
-
--- MAGIC %md
--- MAGIC import re
--- MAGIC
--- MAGIC f = open(f'/dbfs/{db_mnt}/netflix_titles.csv', 'r')
--- MAGIC f_str = f.read()
--- MAGIC
--- MAGIC newline_char = "\n"
--- MAGIC regex = newline_char + "(?!s\d{1,12},)"
--- MAGIC fixed_str = re.sub(regex, '', f_str)
--- MAGIC
--- MAGIC dbutils.fs.put(f'{save_dir}/netflix_titles_fixed.csv', fixed_str)
--- MAGIC
-
--- COMMAND ----------
-
--- MAGIC %md
--- MAGIC SELECT COUNT(1) FROM read_files('${env.tmp_dir}/netflix_titles_fixed.csv');
-
--- COMMAND ----------
-
 -- MAGIC %md Ingest raw data (CSV) to an external table
 
 -- COMMAND ----------

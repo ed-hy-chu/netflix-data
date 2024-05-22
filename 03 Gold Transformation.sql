@@ -1,10 +1,8 @@
 -- Databricks notebook source
--- MAGIC %md ## Transformation
+-- MAGIC %md ## Gold Transformation
 -- MAGIC
 -- MAGIC Tasks:
 -- MAGIC 1. Count the number of titles in each category
--- MAGIC 2. List of titles of each cast
--- MAGIC 3. List the longest and shortest titles in each month added
 
 -- COMMAND ----------
 
